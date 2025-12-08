@@ -131,7 +131,13 @@ body{
 .carousel-viewport img, .carousel-viewport video{
   max-width:100%; max-height:420px; border-radius:8px; display:block;
 }
-
+.modal-body p {
+  white-space: normal !important;
+  overflow: visible !important;
+  display: block;
+  line-height: 1.5;
+  margin: 0 0 12px;
+}
 /* footer */
 .site-footer{padding:18px 0;text-align:center;color:#666}
 

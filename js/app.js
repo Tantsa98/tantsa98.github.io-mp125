@@ -125,7 +125,7 @@ function openModal(item){
   modalType.textContent = item.Type || '';
   modalAff.textContent = item.Affiliation || '';
   modalDesc.textContent = item.Desc || '';
-
+/*
   // build media array: files whose filename.startsWith(imgId)
   const id = (item.imgId||'').trim();
   const matched = mediaList.filter(fn => fn.startsWith(id));
@@ -135,6 +135,36 @@ function openModal(item){
     const isVideo = lower.endsWith('.mp4') || lower.endsWith('.webm') || lower.endsWith('.ogg');
     return {src:`Media/${fn}`, type: isVideo ? 'video' : 'image'};
   });
+*/
+// Normalize id
+let id = (item.imgId || '').trim();
+id = id.replace(/^Media\//i, '');        // remove Media/
+id = id.replace(/\.[a-z0-9]+$/i, '');    // remove extension
+
+// Match media filenames
+const matched = mediaList.filter(fn => {
+  const plain = fn.replace(/^Media\//i, '');
+  return plain.startsWith(id);
+});
+
+// Convert to usable objects
+const mediaObjs = matched.map(fn => {
+  const file = fn.startsWith('Media/') ? fn : `Media/${fn}`;
+  const lower = file.toLowerCase();
+  const isVideo =
+    lower.endsWith('.mp4') ||
+    lower.endsWith('.webm') ||
+    lower.endsWith('.ogg');
+
+  return { src: file, type: isVideo ? 'video' : 'image' };
+});
+
+// Insert into carousel
+currentCarousel.items = mediaObjs;
+currentCarousel.index = 0;
+renderCarousel();
+
+//
 
   currentCarousel.items = mediaObjs;
   currentCarousel.index = 0;
