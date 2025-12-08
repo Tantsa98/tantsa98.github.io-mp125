@@ -3,63 +3,49 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Довідник БК</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <title>BK Gallery</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="container">
-      <h1>BK Catalog</h1>
-      <p class="subtitle">Галерея — фільтрація по <strong>типу</strong> та <strong>приналежності</strong></p>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <h1 class="logo">BK Gallery</h1>
+      <p class="subtitle">Проста документаційна галерея — фільтри по Type та Affiliation</p>
     </div>
   </header>
 
   <main class="container main-grid">
-    <aside class="filters" id="filters">
-      <div class="filter-group">
-        <h3>Тип</h3>
-        <div id="filter-type" class="filter-list"></div>
-      </div>
+    <aside class="filters" id="filters" aria-label="Фільтри">
+      <section class="filter-block">
+        <h3>Фільтр — Type</h3>
+        <div id="typeFilters" class="checkbox-list" role="list"></div>
+        <button id="resetType" class="reset-btn" type="button">Скинути Type</button>
+      </section>
 
-      <div class="filter-group">
-        <h3>Приналежність</h3>
-        <div id="filter-aff" class="filter-list"></div>
-      </div>
-
-      <div class="filter-actions">
-        <button id="resetFilters" class="btn btn-secondary">Скинути</button>
-      </div>
+      <section class="filter-block">
+        <h3>Фільтр — Affiliation</h3>
+        <div id="affFilters" class="checkbox-list" role="list"></div>
+        <button id="resetAff" class="reset-btn" type="button">Скинути Affiliation</button>
+      </section>
     </aside>
 
-    <section class="gallery" id="gallery">
-      <!-- карточки будуть згенеровані JS -->
+    <section class="gallery-section" aria-live="polite">
+      <div id="gallery" class="gallery-grid"></div>
+      <div id="emptyState" class="empty" hidden>Нічого не знайдено за цими фільтрами.</div>
     </section>
   </main>
 
-  <!-- Modal / Popup -->
-  <div id="overlay" class="overlay hidden" aria-hidden="true">
+  <!-- Overlay / Modal -->
+  <div id="overlay" class="overlay" hidden>
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <button class="modal-close" id="closeModal" aria-label="Закрити">✕</button>
-      <div class="modal-body">
-        <h2 id="modalTitle"></h2>
-        <p class="meta"><span id="modalType"></span> • <span id="modalAff"></span></p>
-        <p id="modalDesc"></p>
-
-        <div class="media-carousel" id="mediaCarousel">
-          <button class="carousel-btn prev" id="prevMedia" aria-label="Попередній">◀</button>
-          <div class="carousel-viewport" id="carouselViewport"></div>
-          <button class="carousel-btn next" id="nextMedia" aria-label="Наступний">▶</button>
-        </div>
-      </div>
+      <button id="closeModal" class="modal-close" aria-label="Закрити">✕</button>
+      <h2 id="modalTitle"></h2>
+      <p class="meta"><strong>Type:</strong> <span id="modalType"></span> • <strong>Affiliation:</strong> <span id="modalAff"></span></p>
+      <div id="modalDesc" class="desc"></div>
+      <div id="mediaGallery" class="media-gallery" aria-label="Медіа галерея"></div>
     </div>
   </div>
 
-  <footer class="site-footer">
-    <div class="container">
-      <small>© Власність 125 ОВМБр</small>
-    </div>
-  </footer>
-
-  <script src="js/app.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
