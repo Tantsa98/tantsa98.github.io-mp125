@@ -1,6 +1,8 @@
 // category.js
 (function(){
-  const category = document.documentElement.getAttribute('data-category') || document.body.getAttribute('data-category');
+
+  const category = document.documentElement.getAttribute('data-category')
+    || document.body.getAttribute('data-category');
 
   const filtersRoot = document.getElementById('filters');
   const galleryRoot = document.getElementById('gallery');
@@ -13,50 +15,35 @@
   const mAff = document.getElementById('mAff');
   const mDesc = document.getElementById('mDesc');
 
-  // carousel elements
-  const carouselImg = document.getElementById('carouselImg');
   const prevBtn = document.getElementById('prevImg');
   const nextBtn = document.getElementById('nextImg');
   const imgCount = document.getElementById('imgCount');
+  let carouselEl = document.getElementById('carouselImg');
 
   let currentImages = [];
   let currentIndex = 0;
   let categoryData = [];
-  let allMedia = [];
 
-  // ------------------------------
-  // LOAD LIST OF FILES FROM /images/
-  // ------------------------------
-  /*async function loadMediaList() {
+  let mediaIndex = null;
+
+  async function loadMediaIndex(){
+    if (mediaIndex) return mediaIndex;
     try {
-      const r = await fetch("images/"); // GitHub Pages дає HTML-лістинг
-      const text = await r.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(text, "text/html");
-
-      return [...doc.querySelectorAll("a")]
-        .map(a => a.getAttribute("href"))
-        .filter(f => f && f.match(/\.(png|jpg|jpeg|webp|mp4)$/i));
-    } catch (e) {
-      console.error("Помилка завантаження списку медіа:", e);
-      return [];
+      const res = await fetch('./data/media-index.json');
+      mediaIndex = await res.json();
+      return mediaIndex;
+    } catch (e){
+      console.error("Не вдалося завантажити media-index.json", e);
+      mediaIndex = [];
+      return mediaIndex;
     }
-  }*/
-  async function loadMediaList() {
-  try {
-    const r = await fetch("data/media-index.json");
-    return await r.json();
-  } catch (e) {
-    console.error("Помилка завантаження media-index.json:", e);
-    return [];
   }
-}
 
+  async function findMediaByImgId(imgId){
+    const all = await loadMediaIndex();
+    return all.filter(name => name.startsWith(imgId + "#"));
+  }
 
-
-  // ------------------------------
-  // SHOW / HIDE POPUP
-  // ------------------------------
   function setOverlayVisible(visible){
     if(visible){
       overlay.classList.remove('hidden');
@@ -67,10 +54,6 @@
     }
   }
 
-
-  // ------------------------------
-  // FILTERS
-  // ------------------------------
   function renderFilters(types){
     if(!filtersRoot) return;
     filtersRoot.innerHTML = '';
@@ -78,6 +61,7 @@
       filtersRoot.innerHTML = '<p class="muted">Немає варіантів</p>';
       return;
     }
+
     const frag = document.createDocumentFragment();
     types.forEach(t => {
       const id = 'f_'+t.replace(/\s+/g,'_');
@@ -90,84 +74,87 @@
 
   function getSelectedTypes(){
     if(!filtersRoot) return [];
-    return Array.from(filtersRoot.querySelectorAll('input:checked')).map(i => i.value);
+    return Array.from(filtersRoot.querySelectorAll('input:checked'))
+      .map(i => i.value);
   }
 
   function filterByTypes(data, selected){
-    if(!selected || selected.length===0) return data;
+    if(!selected.length) return data;
     return data.filter(d => selected.includes(d.Type));
   }
 
-
-  // ------------------------------
-  // GALLERY
-  // ------------------------------
   function renderGallery(data){
     galleryRoot.innerHTML = '';
     if(!data.length){
       galleryRoot.innerHTML = '<p class="muted">Нічого не знайдено.</p>';
       return;
     }
+
     const frag = document.createDocumentFragment();
+
     data.forEach(item => {
       const card = document.createElement('div');
       card.className = 'card-item';
       card.tabIndex = 0;
       card.setAttribute('role','button');
       card.innerHTML = `<h3>${item.Name}</h3><p class="type">${item.Type}</p>`;
+
       card.addEventListener('click', () => openModal(item));
-      card.addEventListener('keydown', e => { if(e.key==='Enter') openModal(item); });
+      card.addEventListener('keydown', e => { 
+        if(e.key === 'Enter') openModal(item);
+      });
+
       frag.appendChild(card);
     });
+
     galleryRoot.appendChild(frag);
   }
 
-
-  // ------------------------------
-  // OPEN MODAL & LOAD IMAGES
-  // ------------------------------
   async function openModal(item){
-    if (!allMedia.length) allMedia = await loadMediaList();
-
     mName.textContent = item.Name || '';
     mType.textContent = item.Type || '';
     mAff.textContent = item.Affiliation || '';
     mDesc.textContent = item.Desc || '';
 
-    const imgId = (item.imgId || "").trim().toLowerCase();
-
-    // вибір файлів: prefix === imgId
-    currentImages = allMedia.filter(filename => {
-      const lower = filename.toLowerCase();
-      if (!lower.includes("#")) return false;
-      const prefix = lower.split("#")[0];
-      return prefix === imgId;
-    });
+    const imgId = (item.imgId || '').trim();
+    currentImages = await findMediaByImgId(imgId);
 
     currentIndex = 0;
     updateCarousel();
     setOverlayVisible(true);
   }
 
-
-  // ------------------------------
-  // CAROUSEL
-  // ------------------------------
   function updateCarousel(){
     if(!currentImages.length){
-      carouselImg.src = '';
-      carouselImg.alt = 'Без медіа';
+      carouselEl.replaceWith(carouselEl.cloneNode());
+      carouselEl = document.getElementById('carouselImg');
       imgCount.textContent = '0 / 0';
       prevBtn.style.display = 'none';
       nextBtn.style.display = 'none';
       return;
     }
 
-    const src = 'images/' + currentImages[currentIndex];
-    carouselImg.src = src;
-    carouselImg.alt = currentImages[currentIndex];
+    const file = currentImages[currentIndex];
+    const ext = file.split('.').pop().toLowerCase();
+    const url = './media/' + file;
 
-    imgCount.textContent = (currentIndex+1) + ' / ' + currentImages.length;
+    let newEl;
+
+    if(['mp4','webm','mov'].includes(ext)){
+      newEl = document.createElement('video');
+      newEl.controls = true;
+    } else {
+      newEl = document.createElement('img');
+      newEl.alt = file;
+    }
+
+    newEl.id = 'carouselImg';
+    newEl.src = url;
+
+    carouselEl.replaceWith(newEl);
+    carouselEl = newEl;
+
+    imgCount.textContent = (currentIndex+1)+' / '+currentImages.length;
 
     prevBtn.style.display = currentImages.length > 1 ? 'block' : 'none';
     nextBtn.style.display = currentImages.length > 1 ? 'block' : 'none';
@@ -185,43 +172,38 @@
     updateCarousel();
   }
 
-
-  // ------------------------------
-  // EVENTS
-  // ------------------------------
   function attachEvents(){
-    if(!filtersRoot) return;
+    if(filtersRoot){
+      filtersRoot.addEventListener('change', () => {
+        const selected = getSelectedTypes();
+        renderGallery(filterByTypes(categoryData, selected));
+      });
+    }
 
-    filtersRoot.addEventListener('change', () => {
-      const selected = getSelectedTypes();
-      const filtered = filterByTypes(categoryData, selected);
-      renderGallery(filtered);
-    });
-
-    if(clearBtn) clearBtn.addEventListener('click', () => {
-      Array.from(filtersRoot.querySelectorAll('input')).forEach(i => i.checked = false);
-      renderGallery(categoryData);
-    });
+    if(clearBtn){
+      clearBtn.addEventListener('click', () => {
+        Array.from(filtersRoot.querySelectorAll('input')).forEach(i => i.checked = false);
+        renderGallery(categoryData);
+      });
+    }
 
     if(closeModal) closeModal.addEventListener('click', () => setOverlayVisible(false));
-    if(overlay) overlay.addEventListener('click', e => { if(e.target === overlay) setOverlayVisible(false); });
+    if(overlay) overlay.addEventListener('click', e => { 
+      if(e.target === overlay) setOverlayVisible(false); 
+    });
 
     prevBtn.addEventListener('click', prevImage);
     nextBtn.addEventListener('click', nextImage);
   }
 
-
-  // ------------------------------
-  // INIT
-  // ------------------------------
   async function init(){
     attachEvents();
 
     const all = await window.App.loadCSV();
 
-    // фільтруємо БК за категорією
     categoryData = all.filter(it =>
-      (it.Affiliation || '').trim().toLowerCase().includes((category || '').trim().toLowerCase())
+      (it.Affiliation || '').trim().toLowerCase()
+        .includes((category || '').trim().toLowerCase())
     );
 
     const types = window.App.utils.unique(categoryData.map(d => d.Type));
