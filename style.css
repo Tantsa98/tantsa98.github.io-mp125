@@ -1,234 +1,198 @@
-/* ----------------------- */
-/*     MILITARY THEME      */
-/* ----------------------- */
-
 :root {
-  --accent: #fd8906;   /* Orange tactical */
-  --bg: #0b0a0c;       /* Deep dark military */
-  --panel: #10050f;    /* Dark purple-ish ops panel */
-  --muted: #dfb700;    /* Golden command accent */
-  --tech: #00498f;     /* Blue tech HUD */
+  --bg: #080607;
+  --panel: #120f11;
+  --card: #1a1719;
+  --accent: #fd8906;
+  --accent-glow: rgba(253,137,6,0.5);
+  --muted: #dfb700;
+  --blue: #00498f;
 
-  --text-light: #e6e6e6;
-  --text-dim: #9c9c9c;
+  --radius: 12px;
+  --gap: 16px;
+  --text: #e6e6e6;
 
-  --radius: 10px;
-  --gap: 18px;
-  --max-width: 1200px;
+  --border: 1px solid rgba(253,137,6,0.4);
 }
 
 * {
   box-sizing: border-box;
-  font-family: "Consolas", "Courier New", monospace; /* Military terminal look */
 }
 
 body {
   margin: 0;
-  padding: 0;
   background: var(--bg);
-  color: var(--text-light);
-  line-height: 1.5;
+  color: var(--text);
+  font-family: "Segoe UI", monospace;
 }
 
-/* ----------------------- */
-/*        WRAPPER          */
-/* ----------------------- */
+/* ---------------- TOP BAR ------------------- */
 
-.wrapper {
-  width: 100%;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 25px;
+.topbar {
+  background: #0f0c0d;
+  padding: 12px 20px;
+  border-bottom: var(--border);
+  box-shadow: 0 0 20px var(--accent-glow);
 }
 
-/* Tactical Section Titles */
-.section-title {
-  color: var(--muted);
-  text-transform: uppercase;
-  font-weight: bold;
-  letter-spacing: 2px;
-  border-left: 4px solid var(--accent);
-  padding-left: 10px;
-  margin-bottom: 20px;
+.logo {
+  margin: 0;
+  color: var(--accent);
+  text-shadow: 0 0 8px var(--accent-glow);
 }
 
-/* ----------------------- */
-/*         FILTERS         */
-/* ----------------------- */
+/* ---------------- GRID (HOME) ------------------- */
 
-#filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--gap);
-  margin-bottom: 25px;
-  padding: 15px;
-  border: 2px solid var(--tech);
-  background: rgba(16, 5, 15, 0.7);
-  border-radius: 12px;
-  backdrop-filter: blur(2px);
-}
-
-#filters select,
-#clearFilters {
-  background: var(--panel);
-  border: 2px solid var(--accent);
-  padding: 10px 14px;
-  color: var(--text-light);
-  font-size: 15px;
-  border-radius: var(--radius);
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-#filters select:hover,
-#clearFilters:hover {
-  box-shadow: 0 0 10px var(--accent);
-  border-color: var(--muted);
-}
-
-/* Reset button */
-#clearFilters {
-  background: linear-gradient(135deg, var(--accent), var(--muted));
-  font-weight: bold;
-  color: #000;
-  text-transform: uppercase;
-}
-
-/* ----------------------- */
-/*        GALLERY          */
-/* ----------------------- */
-
-#gallery {
+.grid-3 {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: var(--gap);
 }
-
-/* ----------------------- */
-/*          CARDS          */
-/* ----------------------- */
 
 .card {
-  background: var(--panel);
-  border: 2px solid var(--tech);
+  background: var(--card);
+  padding: 20px;
+  border: var(--border);
   border-radius: var(--radius);
-  overflow: hidden;
-  transition: 0.2s ease;
   cursor: pointer;
-  position: relative;
-
-  /* subtle tech glow */
-  box-shadow: 0 0 15px rgba(0, 73, 143, 0.1);
+  transition: 0.2s ease;
+  box-shadow: inset 0 0 0 0 var(--accent);
 }
 
 .card:hover {
-  transform: scale(1.03);
-  border-color: var(--accent);
-  box-shadow: 0 0 16px var(--accent);
+  transform: translateY(-6px);
+  box-shadow: inset 0 0 12px var(--accent);
 }
 
-/* Tech grid overlay on hover */
-.card:hover::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(
-    45deg,
-    rgba(253, 137, 6, 0.1) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(253, 137, 6, 0.1) 50%,
-    rgba(253, 137, 6, 0.1) 75%,
-    transparent 75%,
-    transparent
-  );
-  background-size: 50px 50px;
-  pointer-events: none;
-}
-
-.card img,
-.card video {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
-
-/* Info block */
-.card .info {
-  padding: 12px;
-  text-align: center;
-  font-size: 15px;
+.card h2 {
+  margin: 0 0 5px;
   color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  text-shadow: 0 0 6px rgba(223,183,0,0.5);
 }
 
-/* ----------------------- */
-/*          MODAL          */
-/* ----------------------- */
+/* ---------------- CATEGORY LAYOUT ------------------- */
 
-#overlay {
+.container {
+  display: flex;
+  gap: var(--gap);
+  padding: 20px;
+}
+
+.sidebar {
+  width: 240px;
+}
+
+.panel {
+  padding: 16px;
+  background: var(--panel);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+/* ---------------- GALLERY ------------------- */
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: var(--gap);
+}
+
+.card-item {
+  padding: 16px;
+  background: var(--card);
+  border: var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: inset 0 0 0 0 var(--accent);
+}
+
+.card-item:hover {
+  box-shadow: inset 0 0 10px var(--accent);
+  transform: translateY(-4px);
+}
+
+.card-item h3 {
+  margin: 0;
+  color: var(--accent);
+}
+
+.type {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* ---------------- MODAL ------------------- */
+
+.overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  display: none;
+  background: rgba(0,0,0,0.75);
+  display: flex;
   justify-content: center;
   align-items: center;
-  padding: 25px;
   backdrop-filter: blur(4px);
-  z-index: 1000;
 }
 
-#modalContent {
+.hidden {
+  display: none;
+}
+
+.modal {
+  width: 85%;
   max-width: 900px;
-  width: 95%;
   background: var(--panel);
-  border: 3px solid var(--accent);
-  border-radius: 12px;
+  border: var(--border);
+  border-radius: var(--radius);
   padding: 20px;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 0 25px var(--accent);
+  box-shadow: 0 0 25px var(--accent-glow);
 }
 
-#modalContent img,
-#modalContent video {
-  width: 100%;
-  border-radius: 10px;
-  border: 2px solid var(--muted);
-}
-
-/* Close button */
-#closeModal {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  background: var(--accent);
-  color: black;
+.modal-close {
+  float: right;
+  background: none;
   border: none;
-  font-size: 18px;
-  padding: 6px 12px;
-  border-radius: 6px;
+  font-size: 26px;
+  color: var(--accent);
   cursor: pointer;
-  font-weight: bold;
 }
 
-#closeModal:hover {
-  background: var(--muted);
-  box-shadow: 0 0 10px var(--muted);
+/* Carousel */
+.carousel {
+  position: relative;
 }
 
-/* ----------------------- */
-/*       RESPONSIVE        */
-/* ----------------------- */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #00000080;
+  border: var(--border);
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
+  color: var(--accent);
+  font-size: 22px;
+}
 
-@media (max-width: 600px) {
-  #gallery {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  }
+#prevImg {
+  left: -50px;
+}
 
-  .card img,
-  .card video {
-    height: 150px;
-  }
+#nextImg {
+  right: -50px;
+}
+
+#carouselImg {
+  max-width: 100%;
+  border-radius: var(--radius);
+  border: var(--border);
+}
+
+.muted {
+  color: #aaa;
+}
+
+.small {
+  font-size: 12px;
 }

@@ -27,7 +27,7 @@
   // ------------------------------
   // LOAD LIST OF FILES FROM /images/
   // ------------------------------
-  async function loadMediaList() {
+  /*async function loadMediaList() {
     try {
       const r = await fetch("images/"); // GitHub Pages дає HTML-лістинг
       const text = await r.text();
@@ -41,7 +41,17 @@
       console.error("Помилка завантаження списку медіа:", e);
       return [];
     }
+  }*/
+  async function loadMediaList() {
+  try {
+    const r = await fetch("data/media-index.json");
+    return await r.json();
+  } catch (e) {
+    console.error("Помилка завантаження media-index.json:", e);
+    return [];
   }
+}
+
 
 
   // ------------------------------
