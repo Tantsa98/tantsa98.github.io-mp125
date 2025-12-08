@@ -3,49 +3,64 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BK Gallery</title>
+  <title>Галерея BK</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="topbar">
-    <div class="container topbar-inner">
-      <h1 class="logo">BK Gallery</h1>
-      <p class="subtitle">Проста документаційна галерея — фільтри по Type та Affiliation</p>
+    <div class="container">
+      <h1 class="brand">Галерея BK</h1>
+      <p class="subtitle">Проста документаційна тема — фільтруй та переглядай</p>
     </div>
   </header>
 
   <main class="container main-grid">
-    <aside class="filters" id="filters" aria-label="Фільтри">
-      <section class="filter-block">
-        <h3>Фільтр — Type</h3>
-        <div id="typeFilters" class="checkbox-list" role="list"></div>
-        <button id="resetType" class="reset-btn" type="button">Скинути Type</button>
-      </section>
+    <aside id="filters" class="filters">
+      <div class="filter-block">
+        <h3>Фільтр: Type</h3>
+        <div id="typeOptions" class="options"></div>
+        <button id="clearType" class="btn ghost">Скинути Type</button>
+      </div>
 
-      <section class="filter-block">
-        <h3>Фільтр — Affiliation</h3>
-        <div id="affFilters" class="checkbox-list" role="list"></div>
-        <button id="resetAff" class="reset-btn" type="button">Скинути Affiliation</button>
-      </section>
+      <div class="filter-block">
+        <h3>Фільтр: Affiliation</h3>
+        <div id="affOptions" class="options"></div>
+        <button id="clearAff" class="btn ghost">Скинути Affiliation</button>
+      </div>
     </aside>
 
-    <section class="gallery-section" aria-live="polite">
-      <div id="gallery" class="gallery-grid"></div>
-      <div id="emptyState" class="empty" hidden>Нічого не знайдено за цими фільтрами.</div>
+    <section class="gallery-area">
+      <div class="controls">
+        <div id="activeFilters" class="active-filters" aria-live="polite"></div>
+        <div class="info">Показано <span id="count">0</span> елементів</div>
+      </div>
+
+      <div id="gallery" class="gallery"></div>
     </section>
   </main>
 
-  <!-- Overlay / Modal -->
-  <div id="overlay" class="overlay" hidden>
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <button id="closeModal" class="modal-close" aria-label="Закрити">✕</button>
-      <h2 id="modalTitle"></h2>
-      <p class="meta"><strong>Type:</strong> <span id="modalType"></span> • <strong>Affiliation:</strong> <span id="modalAff"></span></p>
-      <div id="modalDesc" class="desc"></div>
-      <div id="mediaGallery" class="media-gallery" aria-label="Медіа галерея"></div>
+  <!-- Modal -->
+  <div id="overlay" class="overlay hidden">
+    <div class="modal">
+      <button id="closeModal" class="close">✕</button>
+      <div class="modal-content">
+        <h2 id="mName"></h2>
+        <p class="meta"><strong>Type:</strong> <span id="mType"></span> — <strong>Affiliation:</strong> <span id="mAff"></span></p>
+        <div id="mDesc" class="desc"></div>
+
+        <div id="mediaWrap" class="media-wrap">
+          <button id="prevMedia" class="media-nav">‹</button>
+          <div id="mediaContainer" class="media-container"></div>
+          <button id="nextMedia" class="media-nav">›</button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <script src="script.js" defer></script>
+  <footer class="footer container">
+    <small>Зроблено для документації • мінімалістична тема</small>
+  </footer>
+
+  <script src="script.js" type="module"></script>
 </body>
 </html>
