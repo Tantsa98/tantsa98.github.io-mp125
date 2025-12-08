@@ -49,8 +49,8 @@ body{
 /* responsive */
 @media (max-width:880px){
   .main-grid{grid-template-columns:1fr}
-  .filters{order:2}
-  .gallery{order:1}
+  .filters{order:1}
+  .gallery{order:2}
 }
 
 /* filters */
@@ -63,6 +63,7 @@ body{
   top:20px;
 }
 .filter-group h3{margin:0 0 8px;font-size:0.95rem}
+.filter-group {margin-bottom: 16px}
 .filter-list{display:flex;flex-direction:column;gap:8px}
 .filter-list label{display:flex;align-items:center;gap:8px;font-size:0.95rem}
 .filter-actions{margin-top:12px}
@@ -110,6 +111,13 @@ body{
 }
 .modal-body h2{margin:0 0 6px}
 .modal-body .meta{margin:6px 0 12px;color:#666}
+.modal-body p,
+#modalDesc {
+    white-space: normal;
+    overflow: visible;
+    display: block;
+    line-height: 1.4;
+}
 
 /* carousel */
 .media-carousel{display:flex;align-items:center;gap:8px;margin-top:12px}
