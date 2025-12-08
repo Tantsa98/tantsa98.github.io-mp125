@@ -1,65 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Галерея BK</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Довідник БК</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+<body class="page-root">
+  <header class="topbar">
+    <h1 class="logo">Довідник БК</h1>
+    <nav class="top-actions">
+    </nav>
+  </header>
 
-<body>
+  <main class="center">
+    <p class="lead">Оберіть категорію:</p>
 
-<header class="site-header">
-  <div class="container">
-    <h1 class="brand">Галерея BK</h1>
-    <p class="tagline">Перегляд, пошук, фільтри</p>
-  </div>
-</header>
+    <div class="grid-3">
+      <a class="card big" href="rozvidka.html" aria-label="Розвідка">
+        <h2>Розвідка</h2>
+        <p class="muted">(Mavic)</p>
+      </a>
 
-<div class="container main-grid">
+      <a class="card big" href="bombers.html" aria-label="Бомбери">
+        <h2>Бомбери</h2>
+        <p class="muted">(Heavy Shot, Nemesis, Vampire)</p>
+      </a>
 
-  <!-- LEFT COLUMN – FILTERS -->
-  <aside class="filters">
-    <div class="filter-block">
-      <h3>Тип БК</h3>
-      <div id="filter-type" class="filter-list"></div>
-      <button id="resetType" class="btn-ghost">Очистити типи</button>
+      <a class="card big" href="fpv.html" aria-label="FPV">
+        <h2>FPV</h2>
+        <p class="muted">(радіо / оптоволокно)</p>
+      </a>
     </div>
+  </main>
 
-    <div class="filter-block">
-      <h3>Affiliation</h3>
-      <div id="filter-aff" class="filter-list"></div>
-      <button id="resetAff" class="btn-ghost">Очистити affiliation</button>
-    </div>
-  </aside>
-
-  <!-- RIGHT COLUMN – GALLERY -->
-  <section class="gallery-section">
-    <div id="gallery" class="gallery"></div>
-    <div id="no-results" class="no-results" hidden>Нічого не знайдено.</div>
-  </section>
-
-</div>
-
-<!-- MODAL -->
-<div id="overlay" class="overlay" hidden>
-  <div class="modal">
-    <button id="closeModal" class="modal-close">&times;</button>
-    <div class="modal-body">
-      <h2 id="modalTitle"></h2>
-      <div class="meta">
-        <strong>Тип:</strong> <span id="modalType"></span><br />
-        <strong>Affiliation:</strong> <span id="modalAff"></span>
-      </div>
-      <p id="modalDesc" class="desc"></p>
-
-      <h3>Медіафайли:</h3>
-      <div id="mediaGallery" class="media-gallery"></div>
-    </div>
-  </div>
-</div>
-
-<script src="script.js"></script>
-
+  <footer class="footer">
+    <small>Власність 125 ОВМБр</small>
+  </footer>
 </body>
 </html>
