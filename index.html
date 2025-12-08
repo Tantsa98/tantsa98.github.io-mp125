@@ -9,56 +9,51 @@
 <body>
   <header class="site-header">
     <div class="container">
-      <h1 class="logo">Галерея BK</h1>
-      <p class="subtitle">Легка мінімалістична документація / каталог</p>
+      <h1 class="brand">Галерея BK</h1>
+      <p class="tagline">Проста мінімалістична документація / каталог</p>
     </div>
   </header>
 
-  <main class="container layout">
+  <main class="container main-grid" id="app">
+    <!-- Filters -->
     <aside id="filters" class="filters">
       <section class="filter-block">
         <h3>Фільтр — Type</h3>
-        <div id="typeOptions" class="options"></div>
-        <button id="resetType" class="btn reset">Скинути Type</button>
+        <div id="filter-type" class="filter-list"></div>
+        <button id="resetType" class="btn btn-ghost">Скинути Type</button>
       </section>
 
       <section class="filter-block">
         <h3>Фільтр — Affiliation</h3>
-        <div id="affOptions" class="options"></div>
-        <button id="resetAff" class="btn reset">Скинути Affiliation</button>
+        <div id="filter-aff" class="filter-list"></div>
+        <button id="resetAff" class="btn btn-ghost">Скинути Affiliation</button>
       </section>
     </aside>
 
-    <section class="gallery-area">
-      <div class="toolbar mobile-filters-toggle">
-        <button id="toggleFilters" class="btn">Фільтри</button>
-      </div>
-
-      <div id="gallery" class="gallery"></div>
-
-      <div id="noResults" class="no-results" hidden>
-        Нічого не знайдено за обраними фільтрами.
-      </div>
+    <!-- Gallery -->
+    <section id="gallery-section" class="gallery-section">
+      <div id="gallery" class="gallery" aria-live="polite"></div>
+      <div id="no-results" class="no-results" hidden>Нічого не знайдено.</div>
     </section>
   </main>
 
-  <!-- Modal -->
+  <!-- Modal / Popup -->
   <div id="overlay" class="overlay" hidden>
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <button id="closeModal" class="modal-close" aria-label="Закрити">✕</button>
-      <div class="modal-content">
+      <button id="closeModal" class="modal-close" aria-label="Закрити">&times;</button>
+      <div class="modal-body">
         <h2 id="modalTitle"></h2>
-        <p class="meta"><strong>Type:</strong> <span id="modalType"></span> · <strong>Affiliation:</strong> <span id="modalAff"></span></p>
+        <p class="meta"><strong>Type:</strong> <span id="modalType"></span> &nbsp; | &nbsp; <strong>Affiliation:</strong> <span id="modalAff"></span></p>
         <p id="modalDesc" class="desc"></p>
 
         <div id="mediaGallery" class="media-gallery"></div>
-
-        <div class="modal-footer">
-          <button id="closeModalBottom" class="btn">Закрити</button>
-        </div>
       </div>
     </div>
   </div>
+
+  <footer class="site-footer">
+    <div class="container">© Галерея BK — мінімалістична тема</div>
+  </footer>
 
   <script src="script.js" defer></script>
 </body>
