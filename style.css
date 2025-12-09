@@ -328,3 +328,16 @@ body{
     width:100%;
   }
 }
+
+/* ========================================= */
+/*            LAZY IMAGE SMOOTH FADE         */
+/* ========================================= */
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.fade-in[src] {
+  opacity: 1;
+}
