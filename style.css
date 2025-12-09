@@ -28,6 +28,25 @@ body{
 }
 
 /* ========================================= */
+/*                SPLASH SCREEN              */
+/* ========================================= */
+
+#splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000 url("logo.webp") center center no-repeat;
+  background-size: cover;     /* повне покриття */
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+#splash.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ========================================= */
 /*                  TOPBAR                   */
 /* ========================================= */
 .topbar{
