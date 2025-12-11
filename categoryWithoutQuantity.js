@@ -146,6 +146,11 @@
     } else {
       newEl = document.createElement('img');
       newEl.alt = file;
+
+      // 🔥 Додаємо справжній lazy loading
+      newEl.loading = "lazy";
+      newEl.decoding = "async";
+      newEl.classList.add("fade-in");
     }
 
     newEl.id = 'carouselImg';
