@@ -203,10 +203,15 @@ body{
   color:var(--muted);
   font-size:13px;
 }
-
+/*
 .card-item h3 .count {
-  color: #ffffff; /* білий колір для кількості */
+  color: #ffffff; 
 }
+*/
+.card-item h3 span.count {
+  color: #ffffff;
+}
+
 
 /* ========================================= */
 /*             FULLSCREEN MODAL              */
